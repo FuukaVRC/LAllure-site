@@ -335,6 +335,11 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
   filter:saturate(.92) brightness(.92);
 }
 .cast-card:hover img{ transform:scale(1.06); filter:saturate(1) brightness(1); }
+/* 兼任カード: タブごとに表示する写真を切り替える */
+.cast-card img[data-role]{ display:none; }
+.cast-card img[data-role="cast"]{ display:block; }
+.cast-card.show-staff img[data-role="cast"]{ display:none; }
+.cast-card.show-staff img[data-role="staff"]{ display:block; }
 .cast-overlay{
   position:absolute; left:0; right:0; bottom:0; padding:20px 18px 18px;
   background:linear-gradient(to top, rgba(22,15,18,.95) 20%, rgba(22,15,18,.5) 60%, transparent);
@@ -614,7 +619,8 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
         </div>
       </div>
       <div class="cast-card dual" data-cat="cast staff">
-        <img src="images/cast/cast-02.jpg" alt="クウ宣材写真" loading="lazy">
+        <img src="images/cast/cast-02.jpg" data-role="cast" alt="クウ宣材写真（CAST）" loading="lazy">
+        <img src="images/staff/staff-02.jpg" data-role="staff" alt="クウ宣材写真（STAFF）" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
             <span class="role-badge">CAST</span>
@@ -665,7 +671,8 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
         </div>
       </div>
       <div class="cast-card dual" data-cat="cast staff">
-        <img src="images/cast/cast-07.jpg" alt="Shino_3宣材写真" loading="lazy">
+        <img src="images/cast/cast-07.jpg" data-role="cast" alt="Shino_3宣材写真（CAST）" loading="lazy">
+        <img src="images/cast/cast-07.jpg" data-role="staff" alt="Shino_3宣材写真（STAFF）" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
             <span class="role-badge">CAST</span>
@@ -821,6 +828,9 @@ tabBtns.forEach(btn => {
       castCards.forEach(card => {
         const roles = (card.dataset.cat || '').split(/\s+/).filter(Boolean);
         card.classList.toggle('cat-hidden', !roles.includes(cat));
+        if (card.classList.contains('dual')) {
+          card.classList.toggle('show-staff', cat === 'staff');
+        }
       });
       castGrid.style.opacity = '1';
     }, 180);
