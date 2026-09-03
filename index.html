@@ -1135,7 +1135,7 @@ function syncModalWidthToImage() {
     return;
   }
   const w = castModalImg.getBoundingClientRect().width;
-  if (w > 0) castModalInner.style.width = w + 'px';
+  if (w > 0) castModalInner.style.width = Math.max(w, 460) + 'px';
 }
 
 function openCastModal(card) {
