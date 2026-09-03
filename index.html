@@ -470,18 +470,18 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   position:absolute; inset:0; background:rgba(10,6,7,.92);
 }
 .cast-modal-inner{
-  position:relative; z-index:1; max-width:520px; width:100%; height:min(90vh,800px); max-height:90vh;
+  position:relative; z-index:1; max-width:92vw; height:min(90vh,800px); max-height:90vh;
   background:var(--smoke); border:1px solid rgba(211,170,99,.3);
-  display:flex; flex-direction:column; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; overflow:hidden;
   animation:modalIn .25s var(--ease);
 }
 @keyframes modalIn{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
 .cast-modal-photo{
-  flex:1 1 auto; min-height:0; width:100%; background:var(--void);
+  flex:1 1 auto; min-height:0; max-width:100%; background:var(--void);
   display:flex; align-items:center; justify-content:center;
 }
-.cast-modal-photo img{ max-width:100%; max-height:100%; width:auto; height:auto; display:block; object-fit:contain; }
-.cast-modal-info{ flex:0 0 auto; padding:22px 24px 26px; }
+.cast-modal-photo img{ max-width:100%; max-height:100%; width:auto; height:100%; display:block; object-fit:contain; }
+.cast-modal-info{ flex:0 0 auto; width:100%; padding:22px 24px 26px; }
 .cast-modal-roles{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
 .cast-modal-name{ font-family:var(--script); font-style:italic; font-size:28px; color:var(--gold-soft); }
 .cast-modal-comment{ font-size:14px; color:var(--parchment-dim); margin-top:10px; line-height:1.8; }
@@ -493,7 +493,8 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
 .cast-modal-close:hover{ background:rgba(10,6,7,.85); border-color:var(--gold); color:var(--gold); }
 @media (max-width:560px){
   .cast-modal{ padding:0; }
-  .cast-modal-inner{ max-width:none; max-height:none; height:100%; border:none; }
+  .cast-modal-inner{ width:100%; max-width:none; height:100%; max-height:none; align-items:stretch; border:none; }
+  .cast-modal-photo img{ width:100%; height:auto; max-height:100%; }
 }
 </style>
 <noscript><style>[data-reveal]{ opacity:1 !important; transform:none !important; } .cast-card.cat-hidden{ display:block !important; } .cast-card.soon.cat-hidden{ display:flex !important; }</style></noscript>
@@ -1125,9 +1126,22 @@ function getVisibleCardImg(card) {
   return imgs[0] || null;
 }
 
+const castModalInner = document.querySelector('.cast-modal-inner');
+
+function syncModalWidthToImage() {
+  // Only on desktop layout (mobile goes full-bleed via its own media query)
+  if (window.matchMedia('(max-width:560px)').matches) {
+    castModalInner.style.width = '';
+    return;
+  }
+  const w = castModalImg.getBoundingClientRect().width;
+  if (w > 0) castModalInner.style.width = w + 'px';
+}
+
 function openCastModal(card) {
   const img = getVisibleCardImg(card);
   if (!img) return; // "coming soon" cards have no photo
+  castModalInner.style.width = ''; // reset while loading
   castModalImg.src = img.dataset.full || img.src;
   castModalImg.alt = img.alt;
   castModalName.textContent = card.querySelector('.cast-name')?.textContent || '';
@@ -1136,6 +1150,11 @@ function openCastModal(card) {
   castModal.classList.add('active');
   castModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  if (castModalImg.complete && castModalImg.naturalWidth) {
+    requestAnimationFrame(syncModalWidthToImage);
+  } else {
+    castModalImg.onload = () => requestAnimationFrame(syncModalWidthToImage);
+  }
 }
 
 function closeCastModal() {
@@ -1152,6 +1171,9 @@ castModalClose.addEventListener('click', closeCastModal);
 castModal.querySelector('.cast-modal-backdrop').addEventListener('click', closeCastModal);
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && castModal.classList.contains('active')) closeCastModal();
+});
+window.addEventListener('resize', () => {
+  if (castModal.classList.contains('active')) syncModalWidthToImage();
 });
 
 // ---------- Countdown: next 1st/3rd Thursday 22:30 JST ----------
