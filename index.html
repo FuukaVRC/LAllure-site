@@ -465,15 +465,18 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   position:absolute; inset:0; background:rgba(10,6,7,.92);
 }
 .cast-modal-inner{
-  position:relative; z-index:1; max-width:520px; width:100%; max-height:90vh;
+  position:relative; z-index:1; max-width:520px; width:100%; height:min(90vh,800px); max-height:90vh;
   background:var(--smoke); border:1px solid rgba(211,170,99,.3);
-  display:flex; flex-direction:column; overflow:hidden; overflow-y:auto;
+  display:flex; flex-direction:column; overflow:hidden;
   animation:modalIn .25s var(--ease);
 }
 @keyframes modalIn{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
-.cast-modal-photo{ width:100%; background:var(--void); }
-.cast-modal-photo img{ width:100%; height:auto; display:block; object-fit:contain; }
-.cast-modal-info{ padding:22px 24px 26px; }
+.cast-modal-photo{
+  flex:1 1 auto; min-height:0; width:100%; background:var(--void);
+  display:flex; align-items:center; justify-content:center;
+}
+.cast-modal-photo img{ max-width:100%; max-height:100%; width:auto; height:auto; display:block; object-fit:contain; }
+.cast-modal-info{ flex:0 0 auto; padding:22px 24px 26px; }
 .cast-modal-roles{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
 .cast-modal-name{ font-family:var(--script); font-style:italic; font-size:28px; color:var(--gold-soft); }
 .cast-modal-comment{ font-size:14px; color:var(--parchment-dim); margin-top:10px; line-height:1.8; }
