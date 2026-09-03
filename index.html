@@ -444,6 +444,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   .join-grid{ grid-template-columns:1fr; }
 }
 @media (max-width:560px){
+  .wrap{ padding:0 20px; }
   .info-grid{ grid-template-columns:1fr; }
   .hero-meta{ flex-direction:column; gap:10px; }
   .hero-meta span+span::before{ content:''; }
@@ -452,6 +453,10 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   .cast-grid{ gap:16px; }
   .cast-card{ flex-basis:42%; }
   .cast-card .cast-comment{ display:none; }
+  .cast-overlay{ padding:14px 12px 12px; }
+  .cast-roles{ flex-wrap:nowrap; gap:4px; margin-bottom:6px; }
+  .role-badge{ font-size:9px; padding:3px 6px; white-space:nowrap; flex:0 0 auto; }
+  .cast-name{ font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .tab-btn{ padding:10px 18px; font-size:12px; }
 }
 
