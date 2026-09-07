@@ -341,6 +341,10 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
 .cast-card img[data-role="cast"]{ display:block; }
 .cast-card.show-staff img[data-role="cast"]{ display:none; }
 .cast-card.show-staff img[data-role="staff"]{ display:block; }
+.cast-card .cast-comment[data-role]{ display:none; }
+.cast-card .cast-comment[data-role="cast"]{ display:-webkit-box; }
+.cast-card.show-staff .cast-comment[data-role="cast"]{ display:none; }
+.cast-card.show-staff .cast-comment[data-role="staff"]{ display:-webkit-box; }
 .cast-overlay{
   position:absolute; left:0; right:0; bottom:0; padding:22px 20px 20px;
   background:linear-gradient(to top, rgba(22,15,18,.95) 20%, rgba(22,15,18,.5) 60%, transparent);
@@ -482,6 +486,17 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
 }
 .cast-modal-photo img{ max-width:100%; max-height:100%; width:auto; height:100%; display:block; object-fit:contain; }
 .cast-modal-info{ flex:0 0 auto; width:100%; padding:22px 24px 26px; }
+.cast-modal-extra{
+  margin-top:16px; padding-top:16px; border-top:1px solid rgba(211,170,99,.18);
+  display:flex; flex-direction:column; gap:10px;
+}
+.cast-modal-extra-row{ position:relative; padding-left:18px; font-size:13px; line-height:1.7; color:var(--parchment); }
+.cast-modal-extra-row::before{
+  content:''; position:absolute; left:0; top:6px; width:6px; height:6px;
+  background:var(--gold); transform:rotate(45deg);
+}
+.cast-modal-extra-row .extra-label{ color:var(--gold-soft); margin-right:6px; }
+.cast-modal-extra-row .extra-value{ color:var(--parchment-dim); }
 .cast-modal-roles{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
 .cast-modal-name{ font-family:var(--script); font-style:italic; font-size:28px; color:var(--gold-soft); }
 .cast-modal-comment{ font-size:14px; color:var(--parchment-dim); margin-top:10px; line-height:1.8; }
@@ -745,7 +760,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">今夜、私とあなたで素敵なひと時を。</div>
         </div>
       </div>
-<div class="cast-card dual" data-cat="cast staff">
+<div class="cast-card dual" data-cat="cast staff" data-service-type="王子様系👑" data-specialty="距離感近め、イチャイチャ系" data-recommend="エスコートされたい、メロつきたい方">
         <img src="images/staff/staff-09.jpg" data-full="images/full/staff-09.jpg" alt="旅硝子宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -776,7 +791,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">味見ぐらいなら...許されるよね♡</div>
         </div>
       </div>
-<div class="cast-card" data-cat="cast">
+<div class="cast-card" data-cat="cast" data-service-type="甘やかし系🍫" data-specialty="聞き役、褒める、距離感近め" data-recommend="お喋りとイチャイチャ、両方楽しみたい方">
         <img src="images/cast/cast-10.jpg" data-full="images/full/cast-10.jpg" alt="ふうか宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -786,7 +801,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">あなたに会えるのを楽しみにしてます♡</div>
         </div>
       </div>
-<div class="cast-card" data-cat="cast">
+<div class="cast-card" data-cat="cast" data-service-type="隣に住んでる普段何やってるか分かんないお姉さん系💄" data-specialty="自由気まま" data-recommend="なんともいえない距離感を味わいたい人">
         <img src="images/cast/cast-01.jpg" data-full="images/full/cast-01.jpg" alt="ぽぎ宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -816,7 +831,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">あなたと一緒に素敵な夜を…♡</div>
         </div>
       </div>
-<div class="cast-card" data-cat="cast">
+<div class="cast-card" data-cat="cast" data-service-type="お姉さん系、からかい系" data-specialty="褒める、距離近" data-recommend="お喋り好きな人、ぐいぐい来られたい人">
         <img src="images/cast/cast-11.jpg" data-full="images/full/cast-11.jpg" alt="りゅーざめし宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -846,7 +861,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">この瞬間だけ、貴方のもの</div>
         </div>
       </div>
-<div class="cast-card dual" data-cat="cast staff owner">
+<div class="cast-card dual" data-cat="cast staff owner" data-service-type="からかい系🌹" data-specialty="褒める、翻弄する" data-recommend="弄ばれたい人、初めてで緊張しちゃう人">
         <img src="images/cast/cast-21.jpg" data-full="images/full/cast-21.jpg" alt="Cart宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -868,7 +883,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
           <div class="cast-comment">お疲れさま。今日は私とゆっくりしよ。</div>
         </div>
       </div>
-<div class="cast-card" data-cat="cast">
+<div class="cast-card" data-cat="cast" data-service-type="お姉さん系＆小悪魔系" data-specialty="翻弄する・距離感近め・耳責め" data-recommend="弄ばれたい人・ドロドロにされたい人">
         <img src="images/cast/cast-16.jpg" data-full="images/full/cast-16.jpg" alt="M4PLE宣材写真" loading="lazy">
         <div class="cast-overlay">
           <div class="cast-roles">
@@ -898,7 +913,8 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
             <span class="role-badge staff">STAFF</span>
           </div>
           <div class="cast-name">Shino_3</div>
-          <div class="cast-comment">今宵 忘れられない特別な一時を</div>
+          <div class="cast-comment" data-role="cast">今宵 忘れられない特別な一時を</div>
+          <div class="cast-comment" data-role="staff">今宵、貴方の思い出に新たな1ページを</div>
         </div>
       </div>
       <!-- STAFF -->
@@ -998,6 +1014,11 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
       <div class="cast-modal-roles" id="castModalRoles"></div>
       <div class="cast-modal-name" id="castModalName"></div>
       <div class="cast-modal-comment" id="castModalComment"></div>
+      <div class="cast-modal-extra" id="castModalExtra">
+        <div class="cast-modal-extra-row" id="castModalTypeRow"><span class="extra-label">接客タイプ：</span><span class="extra-value" id="castModalType"></span></div>
+        <div class="cast-modal-extra-row" id="castModalSkillRow"><span class="extra-label">得意な接客：</span><span class="extra-value" id="castModalSkill"></span></div>
+        <div class="cast-modal-extra-row" id="castModalRecommendRow"><span class="extra-label">こんな人におすすめ：</span><span class="extra-value" id="castModalRecommend"></span></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1129,6 +1150,13 @@ const castModalImg = document.getElementById('castModalImg');
 const castModalName = document.getElementById('castModalName');
 const castModalComment = document.getElementById('castModalComment');
 const castModalRoles = document.getElementById('castModalRoles');
+const castModalExtra = document.getElementById('castModalExtra');
+const castModalTypeRow = document.getElementById('castModalTypeRow');
+const castModalType = document.getElementById('castModalType');
+const castModalSkillRow = document.getElementById('castModalSkillRow');
+const castModalSkill = document.getElementById('castModalSkill');
+const castModalRecommendRow = document.getElementById('castModalRecommendRow');
+const castModalRecommend = document.getElementById('castModalRecommend');
 const castModalClose = document.getElementById('castModalClose');
 
 function getVisibleCardImg(card) {
@@ -1137,6 +1165,14 @@ function getVisibleCardImg(card) {
     if (getComputedStyle(im).display !== 'none') return im;
   }
   return imgs[0] || null;
+}
+
+function getVisibleCardComment(card) {
+  const comments = card.querySelectorAll('.cast-comment');
+  for (const c of comments) {
+    if (getComputedStyle(c).display !== 'none') return c;
+  }
+  return comments[0] || null;
 }
 
 const castModalInner = document.querySelector('.cast-modal-inner');
@@ -1158,8 +1194,26 @@ function openCastModal(card) {
   castModalImg.src = img.dataset.full || img.src;
   castModalImg.alt = img.alt;
   castModalName.textContent = card.querySelector('.cast-name')?.textContent || '';
-  castModalComment.textContent = card.querySelector('.cast-comment')?.textContent || '';
+  castModalComment.textContent = getVisibleCardComment(card)?.textContent || '';
   castModalRoles.innerHTML = card.querySelector('.cast-roles')?.innerHTML || '';
+
+  const fields = [
+    ['type', card.dataset.serviceType, castModalTypeRow, castModalType],
+    ['skill', card.dataset.specialty, castModalSkillRow, castModalSkill],
+    ['recommend', card.dataset.recommend, castModalRecommendRow, castModalRecommend],
+  ];
+  let anyField = false;
+  fields.forEach(([, value, rowEl, valueEl]) => {
+    if (value) {
+      valueEl.textContent = value;
+      rowEl.style.display = '';
+      anyField = true;
+    } else {
+      rowEl.style.display = 'none';
+    }
+  });
+  castModalExtra.style.display = anyField ? '' : 'none';
+
   castModal.classList.add('active');
   castModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
