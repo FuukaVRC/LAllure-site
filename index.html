@@ -448,7 +448,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   .world-frame img{ animation:none; }
   .scroll-cue .line{ animation:none; }
   [data-reveal]{ transition:opacity .3s linear; transform:none; }
-  .cast-modal-inner{ animation:none; }
+  .cast-modal.ready .cast-modal-inner{ animation:none; }
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -487,9 +487,9 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
 .cast-modal-inner{
   position:relative; z-index:1; max-width:92vw; height:min(90vh,800px); max-height:90vh;
   background:var(--smoke); border:1px solid rgba(211,170,99,.3);
-  display:flex; flex-direction:column; align-items:center; overflow:hidden;
-  animation:modalIn .25s var(--ease);
+  display:flex; flex-direction:column; align-items:center; overflow:hidden; visibility:hidden;
 }
+.cast-modal.ready .cast-modal-inner{ visibility:visible; animation:modalIn .25s var(--ease); }
 @keyframes modalIn{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
 .cast-modal-photo{
   flex:1 1 auto; min-height:0; max-width:100%; background:var(--void);
@@ -1199,11 +1199,23 @@ function syncModalWidthToImage() {
   if (w > 0) castModalInner.style.width = Math.max(w, 460) + 'px';
 }
 
+function revealSizedCastModal() {
+  requestAnimationFrame(() => {
+    if (!castModal.classList.contains('active')) return;
+    syncModalWidthToImage();
+    castModal.classList.add('ready');
+    castModalClose.focus();
+  });
+}
+
 function openCastModal(card) {
   const img = getActiveRoleElement(card, 'img');
   if (!img) return; // "coming soon" cards have no photo
   lastFocusedElement = document.activeElement;
+  castModal.classList.remove('ready');
   castModalInner.style.width = ''; // reset while loading
+  castModalImg.onload = null;
+  castModalImg.onerror = null;
   castModalImg.src = img.dataset.full || img.src;
   castModalImg.alt = img.alt;
   castModalName.textContent = card.querySelector('.cast-name')?.textContent || '';
@@ -1231,17 +1243,22 @@ function openCastModal(card) {
   castModal.setAttribute('aria-hidden', 'false');
   previousBodyOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
-  requestAnimationFrame(() => castModalClose.focus());
   if (castModalImg.complete && castModalImg.naturalWidth) {
-    requestAnimationFrame(syncModalWidthToImage);
+    if (castModalImg.decode) {
+      castModalImg.decode().then(revealSizedCastModal, revealSizedCastModal);
+    } else {
+      revealSizedCastModal();
+    }
   } else {
-    castModalImg.onload = () => requestAnimationFrame(syncModalWidthToImage);
+    castModalImg.onload = revealSizedCastModal;
+    castModalImg.onerror = revealSizedCastModal;
   }
 }
 
 function closeCastModal() {
   if (!castModal.classList.contains('active')) return;
   castModal.classList.remove('active');
+  castModal.classList.remove('ready');
   castModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = previousBodyOverflow;
   if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
