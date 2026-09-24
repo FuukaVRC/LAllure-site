@@ -6,18 +6,27 @@
 <title>L’Allure（ラリュール）| VRChat Night Club</title>
 <meta name="description" content="L'Allure(ラリュール) - イケ女お姉さんによる1:1接客のVRChatナイトクラブ。月2回、第1・第3木曜日22:30開催。余裕と色気の世界へようこそ。">
 <meta name="theme-color" content="#160f12">
+<link rel="canonical" href="https://fuukavrc.github.io/LAllure-site/">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://fuukavrc.github.io/LAllure-site/">
 <meta property="og:title" content="L’Allure（ラリュール）| VRChat Night Club">
 <meta property="og:description" content="イケ女お姉さんによる1:1接客のVRChatナイトクラブ。月2回、第1・第3木曜日22:30開催。余裕と色気の世界へようこそ。">
 <meta property="og:site_name" content="L’Allure">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://fuukavrc.github.io/LAllure-site/images/logo.png">
+<meta property="og:image:width" content="689">
+<meta property="og:image:height" content="565">
+<meta property="og:image:alt" content="L’Allure ロゴ">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="L’Allure（ラリュール）| VRChat Night Club">
 <meta name="twitter:description" content="イケ女お姉さんによる1:1接客のVRChatナイトクラブ。月2回、第1・第3木曜日22:30開催。">
+<meta name="twitter:image" content="https://fuukavrc.github.io/LAllure-site/images/logo.png">
+<meta name="twitter:image:alt" content="L’Allure ロゴ">
 <meta name="twitter:site" content="@LAllure_VRC113">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,4 91,27 91,73 50,96 9,73 9,27' fill='%230b0708' stroke='%23c9a15a' stroke-width='4'/%3E%3Ctext x='50' y='64' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='38' fill='%23c9a15a'%3ELA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Shippori+Mincho:wght@500;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Shippori+Mincho:wght@500;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
-
 :root{
   --void:#160f12;
   --void-2:#221720;
@@ -117,9 +126,7 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
   border-bottom:1px solid transparent;
 }
 .nav.scrolled{
-  background:rgba(22,15,18,.82);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  background:rgba(22,15,18,.96);
   padding:12px 28px;
   border-color:rgba(211,170,99,.18);
 }
@@ -166,9 +173,10 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
 .mobile-drawer{
   position:fixed; inset:0; background:rgba(22,15,18,.98); z-index:150;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px;
-  opacity:0; pointer-events:none; transition:opacity .4s var(--ease);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .4s var(--ease), visibility 0s linear .4s;
 }
-.mobile-drawer.open{ opacity:1; pointer-events:auto; }
+.mobile-drawer.open{ opacity:1; visibility:visible; pointer-events:auto; transition-delay:0s; }
 .mobile-drawer a{
   font-family:var(--script); font-style:italic; font-size:26px; color:var(--parchment);
 }
@@ -330,12 +338,14 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
 }
 .cast-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent-line); z-index:2; opacity:.9; }
 .cast-card:hover{ border-color:var(--gold); transform:translateY(-6px); }
+.cast-card:focus-visible{ border-color:var(--gold); transform:translateY(-6px); }
 .cast-card img{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center;
   transition:transform .8s var(--ease), filter .5s;
   filter:saturate(.92) brightness(.92);
 }
-.cast-card:hover img{ transform:scale(1.06); filter:saturate(1) brightness(1); }
+.cast-card:hover img,
+.cast-card:focus-visible img{ transform:scale(1.06); filter:saturate(1) brightness(1); }
 /* 兼任カード: タブごとに表示する写真を切り替える */
 .cast-card img[data-role]{ display:none; }
 .cast-card img[data-role="cast"]{ display:block; }
@@ -362,7 +372,7 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
   font-family:var(--script); font-style:italic; font-size:11px; letter-spacing:.14em;
   text-transform:uppercase; line-height:1; padding:4px 9px;
   border:1px solid rgba(211,170,99,.55); color:var(--gold-soft);
-  background:rgba(22,15,18,.4); backdrop-filter:blur(2px);
+  background:rgba(22,15,18,.86);
 }
 .role-badge.staff{ border-color:rgba(184,169,155,.5); color:var(--parchment-dim); }
 .role-badge.owner{
@@ -375,7 +385,7 @@ section{ position:relative; padding:120px 0; scroll-margin-top:74px; isolation:i
 .cast-x{
   position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%;
   border:1px solid rgba(241,232,218,.4); display:flex; align-items:center; justify-content:center;
-  font-family:var(--script); font-style:italic; font-size:12px; color:var(--parchment); backdrop-filter:blur(4px);
+  font-family:var(--script); font-style:italic; font-size:12px; color:var(--parchment); background:rgba(22,15,18,.86);
 }
 .cast-card.soon{ display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; border-style:dashed; cursor:default; }
 .cast-card.soon .mark{ width:34px; height:34px; color:var(--gold-dim); }
@@ -438,6 +448,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   .world-frame img{ animation:none; }
   .scroll-cue .line{ animation:none; }
   [data-reveal]{ transition:opacity .3s linear; transform:none; }
+  .cast-modal-inner{ animation:none; }
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -532,10 +543,10 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
     <li><a href="#rule">Rule</a></li>
   </ul>
   <a class="nav-x" href="https://x.com/LAllure_VRC113" target="_blank" rel="noopener" aria-label="公式Xを見る">𝕏</a>
-  <button class="burger" id="burger" aria-label="メニューを開く" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
 </header>
 
-<div class="mobile-drawer" id="drawer">
+<div class="mobile-drawer" id="drawer" aria-hidden="true" inert>
   <a href="#concept">Concept</a>
   <a href="#schedule">Schedule</a>
   <a href="#join">Join</a>
@@ -1003,7 +1014,7 @@ footer p.lead{ font-size:13px; color:var(--parchment-dim); max-width:420px; marg
   </div>
 </section>
 
-<div class="cast-modal" id="castModal" aria-hidden="true">
+<div class="cast-modal" id="castModal" role="dialog" aria-modal="true" aria-labelledby="castModalName" aria-hidden="true">
   <div class="cast-modal-backdrop"></div>
   <div class="cast-modal-inner">
     <button class="cast-modal-close" id="castModalClose" aria-label="閉じる">✕</button>
@@ -1074,16 +1085,24 @@ window.addEventListener('scroll', () => {
 // ---------- Mobile drawer ----------
 const burger = document.getElementById('burger');
 const drawer = document.getElementById('drawer');
-burger.addEventListener('click', () => {
-  const open = drawer.classList.toggle('open');
+function setDrawerOpen(open) {
+  drawer.classList.toggle('open', open);
   burger.classList.toggle('open', open);
   burger.setAttribute('aria-expanded', open);
-});
+  burger.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+  drawer.setAttribute('aria-hidden', String(!open));
+  drawer.inert = !open;
+}
+burger.addEventListener('click', () => setDrawerOpen(!drawer.classList.contains('open')));
 drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  drawer.classList.remove('open');
-  burger.classList.remove('open');
-  burger.setAttribute('aria-expanded', false);
+  setDrawerOpen(false);
 }));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && drawer.classList.contains('open')) {
+    setDrawerOpen(false);
+    burger.focus();
+  }
+});
 
 // ---------- Scroll reveal ----------
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1159,23 +1178,16 @@ const castModalRecommendRow = document.getElementById('castModalRecommendRow');
 const castModalRecommend = document.getElementById('castModalRecommend');
 const castModalClose = document.getElementById('castModalClose');
 
-function getVisibleCardImg(card) {
-  const imgs = card.querySelectorAll('img');
-  for (const im of imgs) {
-    if (getComputedStyle(im).display !== 'none') return im;
-  }
-  return imgs[0] || null;
-}
-
-function getVisibleCardComment(card) {
-  const comments = card.querySelectorAll('.cast-comment');
-  for (const c of comments) {
-    if (getComputedStyle(c).display !== 'none') return c;
-  }
-  return comments[0] || null;
+function getActiveRoleElement(card, selector) {
+  const activeRole = card.classList.contains('show-staff') ? 'staff' : 'cast';
+  return card.querySelector(`${selector}[data-role="${activeRole}"]`)
+    || card.querySelector(`${selector}:not([data-role])`)
+    || card.querySelector(selector);
 }
 
 const castModalInner = document.querySelector('.cast-modal-inner');
+let lastFocusedElement = null;
+let previousBodyOverflow = '';
 
 function syncModalWidthToImage() {
   // Only on desktop layout (mobile goes full-bleed via its own media query)
@@ -1188,13 +1200,14 @@ function syncModalWidthToImage() {
 }
 
 function openCastModal(card) {
-  const img = getVisibleCardImg(card);
+  const img = getActiveRoleElement(card, 'img');
   if (!img) return; // "coming soon" cards have no photo
+  lastFocusedElement = document.activeElement;
   castModalInner.style.width = ''; // reset while loading
   castModalImg.src = img.dataset.full || img.src;
   castModalImg.alt = img.alt;
   castModalName.textContent = card.querySelector('.cast-name')?.textContent || '';
-  castModalComment.textContent = getVisibleCardComment(card)?.textContent || '';
+  castModalComment.textContent = getActiveRoleElement(card, '.cast-comment')?.textContent || '';
   castModalRoles.innerHTML = card.querySelector('.cast-roles')?.innerHTML || '';
 
   const fields = [
@@ -1216,7 +1229,9 @@ function openCastModal(card) {
 
   castModal.classList.add('active');
   castModal.setAttribute('aria-hidden', 'false');
+  previousBodyOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => castModalClose.focus());
   if (castModalImg.complete && castModalImg.naturalWidth) {
     requestAnimationFrame(syncModalWidthToImage);
   } else {
@@ -1225,19 +1240,44 @@ function openCastModal(card) {
 }
 
 function closeCastModal() {
+  if (!castModal.classList.contains('active')) return;
   castModal.classList.remove('active');
   castModal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  document.body.style.overflow = previousBodyOverflow;
+  if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
 }
 
 castCards.forEach(card => {
   if (card.classList.contains('soon')) return;
+  const name = card.querySelector('.cast-name')?.textContent?.trim() || 'メンバー';
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', `${name}の詳細を開く`);
   card.addEventListener('click', () => openCastModal(card));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openCastModal(card);
+    }
+  });
 });
 castModalClose.addEventListener('click', closeCastModal);
 castModal.querySelector('.cast-modal-backdrop').addEventListener('click', closeCastModal);
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && castModal.classList.contains('active')) closeCastModal();
+  if (e.key === 'Tab' && castModal.classList.contains('active')) {
+    const focusable = castModal.querySelectorAll('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 });
 window.addEventListener('resize', () => {
   if (castModal.classList.contains('active')) syncModalWidthToImage();
